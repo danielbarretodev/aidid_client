@@ -1,0 +1,18 @@
+<div class="container-fluid col-12 col-lg-6 col-sm-8 col-xl-4 mt-5">
+  <h2>Login</h2>
+  <form  class="mt-5" #registerForm="ngForm" (ngSubmit)="onSubmit()">
+     <div>
+      <p>
+          <label for="name">Nombre de Usuario</label>
+          <input type="text" name="username" #username="ngModel" 
+          [(ngModel)]="user.username" class="form-control" required/>
+      </p>
+      <p>
+          <label for="name">Contraseña</label>
+          <input type="password" name="password" #password="ngModel" 
+          [(ngModel)]="user.password" class="form-control" required/>
+      </p>
+     </div>
+    <input type="submit" value="Login" class="btn btn-success"/>
+  </form>
+</div>

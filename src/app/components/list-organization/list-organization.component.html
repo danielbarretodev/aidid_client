@@ -1,0 +1,100 @@
+<div class="container-fluid col-12 col-lg-8 col-sm-8 col-xl-8 mt-5" *ngIf="organizations">
+    <h2>Listado de Organizaciones</h2>
+    <table  id="cars-list" class="table">
+        <thead>
+            <tr>
+              <th scope="col">Nombre</th>
+              <th scope="col">Lugar</th>
+              <th scope="col">Tipo de Actividad</th>
+              <th scope="col">Suscribirme</th>
+              <th scope="col">Donar</th> 
+            </tr>
+          </thead>
+          <tbody>
+            <tr scope="row" *ngFor="let organization of organizations">
+                <td>
+                    {{organization.name}}
+                </td>
+                <td>
+                  {{organization.country}}
+                </td>
+                <td>
+                  {{organization.activityType}}
+              </td>
+                <td> 
+                    <button type="button" [disabled]="organizationsWithParticipations.get(organization.id)" (click)="selectItem(organization,'membership')" class="btn btn-info" data-toggle="modal" data-target="#membershipModalCenter">Suscribirme</button>
+                </td>
+                <td> 
+                  <button type="button" (click)="selectItem(organization,'donation')"  class="btn btn-success" data-toggle="modal" data-target="#donationModalCenter">Donar</button>
+                </td>
+            </tr>  
+          </tbody>
+    </table>   
+</div>
+  <!-- Modal de suscripcion -->
+  <div class="modal fade" id="membershipModalCenter" tabindex="-1" role="dialog" aria-labelledby="membershipModelTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header d-flex justify-content-center">
+          <h5 class="modal-title d-flex justify-content-center" id="membershipModalLongTitle">Suscripción </h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div> 
+        <div class="modal-body">
+          <form  #registerForm="ngForm">
+            <div>
+            <p>
+                <label for="name">Cantidad Mensual en €</label>
+                <input type="number" name="amount" #username="ngModel" 
+                [(ngModel)]="membership.amount" class="form-control" required/>
+            </p>
+            <p>
+                <label for="name">Fecha de Inicio</label>
+                <input type="date" name="startDate" #password="ngModel" 
+                [(ngModel)]="membership.startDate" class="form-control" required/>
+            </p>
+            <p>
+                <label for="name">Fecha de Fin</label>
+                <input type="date" name="endingDate" #name="ngModel" 
+                [(ngModel)]="membership.endingDate" class="form-control" required/>
+            </p>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer d-flex justify-content-center">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">cancelar</button>
+          <button type="button" class="btn btn-danger" (click)="suscribe()" data-dismiss="modal">suscribirse</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+   <!-- Modal de donacion -->
+   <div class="modal fade" id="donationModalCenter" tabindex="-1" role="dialog" aria-labelledby="membershipModelTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header d-flex justify-content-center">
+          <h5 class="modal-title d-flex justify-content-center" id="membershipModalLongTitle">Suscripción </h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div> 
+        <div class="modal-body">
+          <form  #registerForm="ngForm">
+            <div>
+            <p>
+                <label for="name">Cantidad en €</label>
+                <input type="number" name="amount" #username="ngModel" 
+                [(ngModel)]="donation.amount" class="form-control" required/>
+            </p>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer d-flex justify-content-center">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">cancelar</button>
+          <button type="button" class="btn btn-danger" (click)="donate()" data-dismiss="modal">donar</button>
+        </div>
+      </div>
+    </div>
+  </div>

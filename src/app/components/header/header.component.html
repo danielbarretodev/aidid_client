@@ -1,0 +1,35 @@
+<header >
+    <nav style="background-color: #6f42c11a!important;" class="px-3 navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" routerLink="">AidDID</a>
+       
+        <div [class.justify-content-between]="identity" 
+        class="collapse navbar-collapse justify-content-end" id="navbarText">
+          <ul *ngIf="identity" class="navbar-nav mr-auto">
+            <li class="nav-item active">
+              <a routerLink="/home" class="nav-link">Home</a>
+            </li>
+          </ul>
+          
+
+            <ul  *ngIf="!identity" class="navbar-nav naavbar-right">
+              <li class="nav-item active">
+                <a routerLink="/login" routerLinkActive="active" class="nav-link">Login</a>
+              </li>
+              <li class="nav-item">
+                <a routerLink="/register" routerLinkActive="active" class="nav-link">Registro</a>
+              </li>
+            </ul>
+          
+
+          <ul *ngIf="identity" class="navbar-nav naavbar-right">
+            <li class="nav-item active">
+              <a (click)="adminLink()" class="nav-link">Bienvenido {{identity.name}}</a>
+            </li>
+            <li class="nav-item">
+              <a  (click)="logout()" class="nav-link">Cerrar Sesion</a>
+            </li>
+          </ul>
+
+        </div>
+      </nav>
+</header>

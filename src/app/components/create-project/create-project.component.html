@@ -1,0 +1,28 @@
+<div class="container-fluid col-12 col-lg-6 col-sm-8 col-xl-4 mt-5">
+    <h2>Crear un Proyecto</h2>
+    <form  class="mt-5" #registerForm="ngForm" (ngSubmit)="onSubmit()">
+       <div>
+            <p>
+                <label for="name">Nombre del proyecto</label>
+                <input type="text" name="name" #name="ngModel" 
+                [(ngModel)]="project.name" class="form-control" required/>
+            </p>
+            <p>
+                <label for="place">Lugar del proyecto</label>
+                <input type="text" name="place" #name="ngModel" 
+                [(ngModel)]="project.place" class="form-control" required/>
+            </p>
+            <p>
+                <label for="name">Fecha de apertura</label>
+                <input type="date" name="date" #date="ngModel" 
+                [(ngModel)]="project.startDate" class="form-control" required/>
+            </p>
+            <p>
+                <label for="name">Fecha de cierre</label>
+                <input type="date" name="date" #date="ngModel" 
+                [(ngModel)]="project.endingDate" class="form-control" required/>
+            </p>
+       </div>
+      <input type="submit" value="Crear Proyecto" class="btn btn-success"/>
+    </form>
+  </div>

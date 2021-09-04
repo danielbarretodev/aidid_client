@@ -1,0 +1,56 @@
+<div class="container-fluid col-12 col-lg-8 col-sm-8 col-xl-8 mt-5" >
+    <h2>Membresias</h2>
+    <table id="membership-list" class="table">
+        <thead>
+            <tr>
+                <th scope="col">id</th>
+                <th scope="col">Cantidad</th>
+                <th scope="col">Fecha de Inicio</th>
+                <th scope="col">Fecha de Fin</th>
+                <th scope="col">Ver Más Detalles</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr scope="row" *ngFor="let membership of memberships">
+                <td>
+                    {{membership.id}}
+                </td>
+                <td>
+                    {{membership.amount}} €
+                </td>
+                <td>
+                    {{membership.startDate | date:'dd/MM/yyyy'}}
+                </td>
+                <td>
+                    {{membership.endingDate | date:'dd/MM/yyyy'}}
+                </td>
+                <td>
+                    <button (click)="moreInfoMembership(membership)"  type="button" class="btn btn-info" 
+                    data-toggle="modal" data-target="#masInfoMembershipModalCenter">Más Info.</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+ <!-- Modal  Mas Info Project Participation -->
+ <div class="modal fade" id="masInfoMembershipModalCenter" tabindex="-1" role="dialog" aria-labelledby="masInfoMembershipModelTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header d-flex justify-content-center">
+          <h5 class="modal-title d-flex justify-content-center" id="masInfoMembershipModalLongTitle">Mas Info</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div *ngIf="!memberships">
+            <h1>cargando...</h1>
+          </div>
+          <div *ngIf="memberships">
+            <div> <span class="font-weight-bold">nombre del usuario:</span> {{solidarityHistory.collaboratorUserName}}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

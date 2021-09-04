@@ -1,0 +1,168 @@
+<div class="container-fluid col-12 col-lg-8 col-sm-8 col-xl-8 mt-5" *ngIf="solidarityHistory">
+    <h2>Historial Solidario</h2>
+    <div class="d-flex flex-column w-100 justify-content-between">
+        <div>
+            <h2>Membresias</h2>
+            <table  id="membership-list" class="table" >
+                <thead>
+                    <tr>
+                      <th scope="col">id</th>
+                      <th scope="col">Nombre de la Org</th>
+                      <th scope="col">Cantidad</th>
+                      <th scope="col">Fecha de Inicio</th>
+                      <th scope="col">Fecha de Fin</th>
+                      <th scope="col">Cancelar Suscripción</th> 
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr scope="row" *ngFor="let membership of solidarityHistory.memberships">
+                        <td>
+                            {{membership.id}}
+                        </td>
+                        <td>
+                          {{membership.organizationUserName}}
+                        </td>
+                        <td>
+                            {{membership.amount}} €
+                        </td>
+                        <td>
+                            {{membership.startDate | date:'dd/MM/yyyy'}}
+                        </td>
+                        <td>
+                            {{membership.endingDate | date:'dd/MM/yyyy'}}
+                        </td>
+                        <td>
+                            <button (click)="selectMembership(membership)"  type="button" class="btn btn-danger" 
+                            data-toggle="modal" data-target="#deleteMembershipModalCenter" >Cancelar Suscripción.</button>
+                        </td>
+                    </tr>  
+                  </tbody>
+            </table>  
+        </div>
+        <div>
+            <h2>Participaciones</h2>
+            <table  id="membership-list" class="table" >
+                <thead>
+                    <tr>
+                      <th scope="col">id</th>
+                      <th scope="col">Fecha de Inicio</th>
+                      <th scope="col">Fecha de Fin</th>
+                      <th scope="col">Más información</th> 
+                      <th scope="col">Cancelar Participación</th> 
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr scope="row" *ngFor="let pp of solidarityHistory.projectParticipations">
+                        <td>
+                            {{pp.id}}
+                        </td>
+                        <td>
+                            {{pp.startDate | date:'dd/MM/yyyy'}}
+                        </td>
+                        <td>
+                            {{pp.endingDate | date:'dd/MM/yyyy'}}
+                        </td>
+                        <td>
+                          <button (click)="moreInfoProjectParticipation(pp)"  type="button" class="btn btn-info" 
+                          data-toggle="modal" data-target="#masInfoProjectPartModalCenter" >Más Info.</button>
+                        </td>
+                        <td>
+                          <button (click)="selectProjectParticipation(pp)"  type="button" class="btn btn-danger" 
+                          data-toggle="modal" data-target="#deleteProjectPartModalCenter">Cancelar Participación</button>
+                        </td>
+                    </tr>  
+                  </tbody>
+            </table>  
+        </div>
+        <div>
+            <h2>Donaciones</h2>
+            <table  id="donation-list" class="table" >
+                <thead>
+                    <tr>
+                      <th scope="col">id</th>
+                      <th scope="col">Nombre de la org.</th>
+                      <th scope="col">Cantidad</th>
+                      <th scope="col">Fecha de Creación</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr scope="row" *ngFor="let donation of solidarityHistory.donations">
+                        <td>
+                            {{donation.id}}
+                        </td>
+                        <td>
+                          {{donation.organizationUserName}}
+                        </td>
+                        <td>
+                            {{donation.amount}} €
+                        </td>
+                        <td>
+                            {{donation.created | date:'dd/MM/yyyy'}}
+                        </td>
+                    </tr>  
+                  </tbody>
+            </table> 
+        </div>
+    </div>
+</div>
+
+
+    <!-- Modal  de confirmacion eliminar -->
+    <div class="modal fade" id="deleteMembershipModalCenter" tabindex="-1" role="dialog" aria-labelledby="deleteMembershipModelTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-header d-flex justify-content-center">
+              <h5 class="modal-title d-flex justify-content-center" id="deleteMembershipModalLongTitle">¿Estás seguro?</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-footer d-flex justify-content-center">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">cancelar</button>
+              <button type="button" class="btn btn-danger" (click)="cancelationMembership()" data-dismiss="modal">Eliminar Suscripción</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    <!-- Modal  Mas Info Project Participation -->
+    <div class="modal fade" id="masInfoProjectPartModalCenter" tabindex="-1" role="dialog" aria-labelledby="masInfoProjectPartModelTitle" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header d-flex justify-content-center">
+            <h5 class="modal-title d-flex justify-content-center" id="masInfoProjectPartModalLongTitle">Mas Info</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div *ngif="loading">
+              <h1>cargando...</h1>
+            </div>
+            <div *ngIf="project">
+              <div> <span class="font-weight-bold">nombre del proyecto:</span> {{project.name}} </div>
+              <div> <span class="font-weight-bold">nombre de la organizacion:</span> {{project.organizationUserName}} </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+        <!-- Modal  Delete Project Participation -->
+        <div class="modal fade" id="deleteProjectPartModalCenter" tabindex="-1" role="dialog" aria-labelledby="deleteProjectPartModelTitle" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+              <div class="modal-header d-flex justify-content-center">
+                <h5 class="modal-title d-flex justify-content-center" id="deleteProjectPartModalLongTitle">Eliminar Participación</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-footer d-flex justify-content-center">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">cancelar</button>
+                <button type="button" class="btn btn-danger" (click)="deleteProjectParticipation()" data-dismiss="modal">Eliminar Participacion</button>
+              </div>
+            </div>
+          </div>
+        </div>
+    

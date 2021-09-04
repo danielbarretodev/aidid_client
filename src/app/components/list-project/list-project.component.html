@@ -1,0 +1,152 @@
+<div class="container-fluid col-12 col-lg-8 col-sm-8 col-xl-8 mt-5" *ngIf="projects">
+    <h2>Listado de Proyectos</h2>
+    <table  id="cars-list" class="table">
+        <thead>
+            <tr>
+              <th scope="col">id</th>
+              <th *ngIf="isOrganization" scope="col">Participantes</th>
+              <th scope="col">Nombre</th>
+              <th scope="col">Lugar</th>
+              <th scope="col">Tipo de Proyecto</th>
+              <th *ngIf="!isOrganization" scope="col">Organización</th>
+              <th scope="col">Fecha de apertura</th>
+              <th scope="col">Fecha de cierre</th>
+              <th *ngIf="isOrganization" scope="col">Editar</th>
+              <th *ngIf="isOrganization" scope="col">Eliminar</th>
+              <th *ngIf="!isOrganization" scope="col">Participar</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr scope="row" *ngFor="let project of projects">
+                <td>
+                    {{project.id}}
+                </td>
+                <td *ngIf="isOrganization">
+                  {{project.projectParticipations.length}}
+                </td>
+                <td>
+                    {{project.name}}
+                </td>
+                <td>
+                  {{project.place}}
+                </td>
+                <td>
+                  {{project.projectType}}
+                </td>
+                <td *ngIf="!isOrganization">
+                  mi org
+                </td>
+                <td>
+                    {{project.startDate | date:'dd/MM/yyyy'}}
+                </td>
+                <td>
+                  {{project.endingDate | date:'dd/MM/yyyy'}}
+              </td>
+                <td *ngIf="isOrganization">
+                    <button type="button" class="btn btn-warning" 
+                    (click)="selectItem(project,'edit')">Editar</button>
+                </td>
+                <td *ngIf="isOrganization"> 
+                    <button type="button" (click)="selectItem(project,'delete')" class="btn btn-danger" data-toggle="modal" data-target="#deleteModalCenter">Eliminar</button>
+                </td>
+                <td *ngIf="!isOrganization"> 
+                  <button type="button" [disabled]="projectWithParticipation.get(project.id)" (click)="selectItem(project,'participation')" class="btn btn-info" data-toggle="modal" data-target="#projectParticipationModalCenter">participar</button>
+                </td>
+            </tr>  
+          </tbody>
+    </table>
+
+    <div *ngIf="isOrganization">
+        <h2>Editar un Proyecto</h2>
+        <form  class="mt-5" #editForm="ngForm"  (ngSubmit)="onSubmit()">
+           <div>
+                <p>
+                    <label for="name">Nombre del proyecto</label>
+                    <input type="text" name="nombre" #name="ngModel" 
+                    [(ngModel)]="newProject.name" class="form-control" required/>
+                </p>
+                <p>
+                  <label for="luger">Lugar del proyecto</label>
+                  <input type="text" name="lubar" #place="ngModel" 
+                  [(ngModel)]="newProject.place" class="form-control" required/>
+              </p>
+              <p>
+                <label for="luger">Tipo de Proyecto</label>
+                <input type="text" name="lubar" #place="ngModel" 
+                [(ngModel)]="newProject.projectType" class="form-control" required/>
+            </p>
+                <p>
+                    <label for="date">Fecha de apertura: </label>
+                    <span *ngIf="isProjectSelected">      {{project.startDate | date:'dd/MM/yyyy'}}
+                    </span>
+                    <input type="date" name="fecha de apertura" #date="ngModel" 
+                    [(ngModel)]="newProject.startDate" (ngModelChange)="project.startDate = $event" class="form-control" required/>
+                </p>
+                <p>
+                  <label for="date">Fecha de cierre: </label>
+                  <span *ngIf="isProjectSelected">      {{project.endingDate | date:'dd/MM/yyyy'}}
+                  </span>
+                  <input type="date" name="fecha de cierre" #date="ngModel" 
+                  [(ngModel)]="newProject.endingDate" (ngModelChange)="project.endingDate = $event" class="form-control" required/>
+              </p>
+           </div>
+          <input type="submit" [disabled]="!isProjectSelected" value="Editar" class="btn btn-success"/>
+        </form>
+    </div>              
+</div>
+
+
+              <!-- Modal  de confirmacion eliminar -->
+              <div *ngIf="isOrganization" class="modal fade" id="deleteModalCenter" tabindex="-1" role="dialog" aria-labelledby="deleteModelTitle" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header d-flex justify-content-center">
+                      <h5 class="modal-title d-flex justify-content-center" id="deleteModalLongTitle">¿Estás seguro?</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-footer d-flex justify-content-center">
+                      <button type="button" class="btn btn-secondary" data-dismiss="modal">cancelar</button>
+                      <button type="button" class="btn btn-danger" (click)="delete()" data-dismiss="modal">eliminar</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+  <!-- Modal  de confirmacion participacion -->
+  <div *ngIf="!isOrganization" class="modal fade" id="projectParticipationModalCenter" tabindex="-1" role="dialog" aria-labelledby="projectParticipationTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header d-flex justify-content-center">
+          <h5 class="modal-title d-flex justify-content-center" id="projectParticipationModalLongTitle">¿Estás seguro?</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form  #registerForm="ngForm">
+            <div>
+              <p>
+                  <label for="name">Teléfono de Contacto</label>
+                  <input  name="contactPhone" #password="ngModel" 
+                  [(ngModel)]="projectParticipation.contactPhone" class="form-control" required/>
+              </p>
+              <p>
+                  <label for="name">Email de Contacto</label>
+                  <input  name="contactEmail" #name="ngModel" 
+                  [(ngModel)]="projectParticipation.contactEmail" class="form-control" required/>
+              </p>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer d-flex justify-content-center">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">cancelar</button>
+          <button type="button" class="btn btn-info" (click)="participate()" data-dismiss="modal">participar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+ 
+

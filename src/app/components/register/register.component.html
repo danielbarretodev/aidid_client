@@ -1,0 +1,78 @@
+<div class="container-fluid col-12 col-lg-6 col-sm-8 col-xl-4 mt-5">
+    <h2>Registro</h2>    
+    <form  class="mt-5" #registerForm="ngForm" (ngSubmit)="onSubmit()">
+        <div class="d-flex justify-content-around">
+            <div>
+                <input checked="checked" (click)="myUserType=userType.COLLABORATOR" value="collaborator" class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
+                <label  value="colaborador-label" class="form-check-label" for="flexRadioDefault1">
+                  Colaborador
+                </label>
+            </div>
+            <div>
+                <input (click)="myUserType=userType.ORGANIZATION" value="organization" class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2">
+                <label class="form-check-label" for="flexRadioDefault2">
+                  Organización
+                </label>
+            </div>
+        </div>
+       
+     
+        <div class="mt-4" *ngIf="myUserType==userType.COLLABORATOR">
+        <p>
+            <label for="name">Nombre de Usuario</label>
+            <input type="text" name="username" #username="ngModel" 
+            [(ngModel)]="collaborator.username" class="form-control" required/>
+        </p>
+        <p>
+            <label for="name">Contraseña</label>
+            <input type="password" name="password" #password="ngModel" 
+            [(ngModel)]="collaborator.password" class="form-control" required/>
+        </p>
+        <p>
+            <label for="name">Nombre</label>
+            <input type="text" name="name" #name="ngModel" 
+            [(ngModel)]="collaborator.name" class="form-control" required/>
+        </p>
+        <p>
+            <label for="name">Apellidos</label>
+            <input type="text" name="surName" #surName="ngModel" 
+            [(ngModel)]="collaborator.surname" class="form-control" required/>
+        </p>
+        <p>
+            <label for="name">Teléfono</label>
+            <input type="text" name="phone" #phone="ngModel" 
+            [(ngModel)]="collaborator.phone" class="form-control" required/>
+        </p>
+        <p>
+            <label for="name">Email</label>
+            <input type="text" name="email" #email="ngModel" 
+            [(ngModel)]="collaborator.email" class="form-control" required/>
+        </p>
+  
+       </div>
+
+       <div class="mt-4" *ngIf="myUserType==userType.ORGANIZATION">
+        <p>
+            <label for="name">Nombre de Usuario</label>
+            <input type="text" name="username" #username="ngModel" 
+            [(ngModel)]="organization.username" class="form-control" required/>
+        </p>
+        <p>
+            <label for="name">Contraseña</label>
+            <input type="password" name="password" #password="ngModel" 
+            [(ngModel)]="organization.password" class="form-control" required/>
+        </p>
+        <p>
+            <label for="name">Nombre</label>
+            <input type="text" name="name" #name="ngModel" 
+            [(ngModel)]="organization.name" class="form-control" required/>
+        </p>
+        <p>
+            <label for="name">Pais</label>
+            <input type="text" name="country" #country="ngModel" 
+            [(ngModel)]="organization.country" class="form-control" required/>
+        </p>
+       </div>
+           <input type="submit" value="Registrarme" class="btn btn-success"/>
+    </form>
+</div>

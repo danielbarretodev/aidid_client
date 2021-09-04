@@ -1,0 +1,14 @@
+
+  <app-header></app-header>
+  <router-outlet></router-outlet>
+
+  <div *ngIf="isAlertSuccessActive || isAlertErrorActive"  class="alert-content">
+    <div *ngIf="isAlertSuccessActive" class="custom-alert alert alert-success" role="alert">
+      Operación realizada con éxito
+    </div>
+    <div *ngIf="isAlertErrorActive" class="custom-alert alert alert-danger" role="alert">
+      Operación no realizada satisfactoriamente
+    </div>
+  </div>
+  
+
